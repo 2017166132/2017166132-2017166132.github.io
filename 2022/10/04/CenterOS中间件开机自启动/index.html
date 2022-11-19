@@ -1,0 +1,291 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.3.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="http://example.com">
+    <!--SEO-->
+
+<meta name="keywords" content="中间件,自启动" />
+
+
+<meta name="description" content="redis在&#x2F;etc&#x2F;init.d&#x2F;目录下新建redis相关命令脚本redis
+12345cd /etc/init.d/ &amp;&amp; touch redi..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    CenterOS中间件开机自启动 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://example.com">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/Java/"><i class="fa "></i>
+                                Java</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/框架/"><i class="fa "></i>
+                                框架</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/工具/"><i class="fa "></i>
+                                工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/其他/"><i class="fa "></i>
+                                其他</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="CenterOS中间件开机自启动">
+            
+            CenterOS中间件开机自启动
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a> <a class="tag-none-link" href="/tags/%E8%87%AA%E5%90%AF%E5%8A%A8/" rel="tag">自启动</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2022/10/04</span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h3><p>在&#x2F;etc&#x2F;init.d&#x2F;目录下新建redis相关命令脚本redis</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/init.d/ &amp;&amp; touch redis</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">编辑redis</span></span><br><span class="line">vim redis</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">参考以下代码</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">REDIS_HOME=/usr/local/redis</span><br><span class="line">IP=127.0.0.1</span><br><span class="line">PORT=6379</span><br><span class="line">PASSWORD=***</span><br><span class="line">case $1 in</span><br><span class="line">         start)</span><br><span class="line">                 $&#123;REDIS_HOME&#125;/bin/redis-server $&#123;REDIS_HOME&#125;/conf/redis.conf</span><br><span class="line">                 ;;</span><br><span class="line">         stop)</span><br><span class="line">                 $&#123;REDIS_HOME&#125;/bin/redis-cli -h $&#123;IP&#125; -p $&#123;PORT&#125; -a $&#123;PASSWORD&#125; shutdown 2&gt;/dev/null</span><br><span class="line">                 ;;</span><br><span class="line">         restart)</span><br><span class="line">                 $&#123;REDIS_HOME&#125;/bin/redis-cli -h $&#123;IP&#125; -p $&#123;PORT&#125; -a $&#123;PASSWORD&#125; shutdown 2&gt;/dev/null</span><br><span class="line">                 $&#123;REDIS_HOME&#125;/bin/redis-server $&#123;REDIS_HOME&#125;/conf/redis.conf</span><br><span class="line">                 ;;</span><br><span class="line">         *)</span><br><span class="line">                 echo &#x27;please use : redis &#123;start | stop | restart&#125;&#x27;</span><br><span class="line">         ;;</span><br><span class="line">esac</span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+
+<p>注： 添加 2&gt;&#x2F;dev&#x2F;null 的目的是将在命令行使用密码的警告去除，若redis没有开启认证，则不需要 -a 参数及后边错误输出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">赋予脚本可执行权限</span></span><br><span class="line">chmod +x redis</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">测试脚本是否成功启动、关闭、重启redis服务</span></span><br><span class="line">service redis start		#开启</span><br><span class="line">service redis stop 		#关闭</span><br><span class="line">service redis restart   #重启</span><br></pre></td></tr></table></figure>
+
+<p>设置开机自启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">1.添加系统服务</span></span><br><span class="line">chkconfig --add redis</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">2.开机自启动</span></span><br><span class="line">chkconfig redis on</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">3.查看</span></span><br><span class="line">chkconfig --list</span><br></pre></td></tr></table></figure>
+
+<p>如下图所示，redis已加入开机自启动，重启机器测试redis有没有自启动</p>
+<h3 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h3><p>步骤参考redis，脚本如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">description: nginx Start Stop Reload</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">processname: nginx</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">chkconfig: 2345 20 80</span></span><br><span class="line"></span><br><span class="line">NGINX_HOME=/usr/local/nginx</span><br><span class="line">NGINX_PID=/usr/local/nginx/logs/nginx.pid</span><br><span class="line"></span><br><span class="line">case $1 in</span><br><span class="line">         start)</span><br><span class="line">            if [ -f $&#123;NGINX_PID&#125; ];then</span><br><span class="line">                echo &quot;nginx服务处于开启状态&quot;</span><br><span class="line">            else</span><br><span class="line">                 $NGINX_HOME/sbin/nginx</span><br><span class="line">            fi</span><br><span class="line">            ;;</span><br><span class="line">         stop)</span><br><span class="line">            if [ ! -f $&#123;NGINX_PID&#125; ];then</span><br><span class="line">                echo &quot;nginx服务已经关闭&quot;</span><br><span class="line">            else</span><br><span class="line">                 $NGINX_HOME/sbin/nginx -s stop</span><br><span class="line">            fi</span><br><span class="line">            ;;</span><br><span class="line">         reload)</span><br><span class="line">                 $NGINX_HOME/sbin/nginx -s reload</span><br><span class="line">            ;;</span><br><span class="line">         *)</span><br><span class="line">                 echo &#x27;please use : nginx &#123;start | stop | reload&#125;&#x27;</span><br><span class="line">            ;;</span><br><span class="line">esac</span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">chkconfig:2345 20 90</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">description:zookeeper</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">processname:zookeeper</span></span><br><span class="line"></span><br><span class="line">export JAVA_HOME=/opt/lft/jdk-17.0.1</span><br><span class="line"></span><br><span class="line">ZOOKEEPER_SERVER=/usr/local/zookeeper-3.6.3/bin/zkServer.sh</span><br><span class="line">case $1 in</span><br><span class="line">        start) </span><br><span class="line">                su root $&#123;ZOOKEEPER_SERVER&#125; start;;</span><br><span class="line">        stop) </span><br><span class="line">                su root $&#123;ZOOKEEPER_SERVER&#125; stop;;</span><br><span class="line">        status) </span><br><span class="line">                su root $&#123;ZOOKEEPER_SERVER&#125; status;;</span><br><span class="line">        restart) </span><br><span class="line">                su root $&#123;ZOOKEEPER_SERVER&#125; restart;;</span><br><span class="line">        *) </span><br><span class="line">                echo &quot;require start|stop|status|restart&quot; ;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3>
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2022/10/05/logback-spring/" class="pre-post btn btn-default" title='sping logback配置'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            sping logback配置</span>
+    </a>
+    
+    
+    <a href="/2022/10/04/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="next-post btn btn-default" title='设计模式-单例模式'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            设计模式-单例模式</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#redis"><span class="toc-text">redis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nginx"><span class="toc-text">nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zookeeper"><span class="toc-text">zookeeper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql"><span class="toc-text">mysql</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>

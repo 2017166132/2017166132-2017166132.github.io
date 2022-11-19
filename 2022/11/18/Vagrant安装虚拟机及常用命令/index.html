@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.3.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="http://example.com">
+    <!--SEO-->
+
+<meta name="keywords" content="Vagrant" />
+
+
+<meta name="description" content="Vagrant安装虚拟机通过网络或者本地添加镜像，添加成功之后初始化，然后启动、连接
+1234567vagrant box add --name centos-7 D://Centos-7.bo..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Vagrant安装虚拟机及常用命令 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://example.com">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/Java/"><i class="fa "></i>
+                                Java</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/框架/"><i class="fa "></i>
+                                框架</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/工具/"><i class="fa "></i>
+                                工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/其他/"><i class="fa "></i>
+                                其他</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Vagrant安装虚拟机及常用命令">
+            
+            Vagrant安装虚拟机及常用命令
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/Vagrant/" rel="tag">Vagrant</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2022/11/18</span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="Vagrant安装虚拟机"><a href="#Vagrant安装虚拟机" class="headerlink" title="Vagrant安装虚拟机"></a>Vagrant安装虚拟机</h3><p>通过网络或者本地添加镜像，添加成功之后初始化，然后启动、连接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vagrant box add --name centos-7 D://Centos-7.box #本地添加</span><br><span class="line">vagrant box add --name centos-7 centos/7	#网络下载</span><br><span class="line"></span><br><span class="line">vagrant box list	# 查看镜像是否添加成功</span><br><span class="line">vagrant init centos-7	#初始化环境，此处虚拟机名称必须和添加时名称一致，否则可能会报错</span><br><span class="line">vagrant up		#启动虚拟机</span><br><span class="line">vagrant ssh		#连接虚拟机</span><br></pre></td></tr></table></figure>
+
+<h3 id="Vagrant常用命令"><a href="#Vagrant常用命令" class="headerlink" title="Vagrant常用命令"></a>Vagrant常用命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">vagrant --version                # 查看 vagrant 版本</span><br><span class="line"></span><br><span class="line">vagrant box list                 # 查看 box 列表</span><br><span class="line">vagrant box add [boxname] [url]  # 添加 box</span><br><span class="line">vagrant box remove [boxname]     # 移除 box</span><br><span class="line">vagrant box update               # 更新 box</span><br><span class="line">vagrant box repackage [name|id] --output [name]  # 打包 box</span><br><span class="line"></span><br><span class="line">vagrant init [name [url]]  # 初始化，生成 Vagrantfile</span><br><span class="line">vagrant up [name|id]       # 启动虚拟机</span><br><span class="line">vagrant halt [name|id]     # 关闭虚拟机</span><br><span class="line">vagrant reload [name|id]   # 重启虚拟机</span><br><span class="line">vagrant reload --provision # 重新加载部分 Vagrantfile 中的配置项</span><br><span class="line">vagrant suspend [name|id]  # 挂起虚拟机</span><br><span class="line">vagrant resume [name|id]   # 唤醒挂起的虚拟机</span><br><span class="line">vagrant destory [name|id]  # 销毁虚拟机</span><br><span class="line">vagrant status [name|id]   # 查看虚拟机状态</span><br><span class="line">vagrant global-status      # 查看所有虚拟机的状态</span><br><span class="line">vagrant port [name|id]     # 查看端口映射</span><br><span class="line">vagrant validate  		   # 校验 Vagrantfile</span><br><span class="line"></span><br><span class="line">vagrant ssh [name|id]         # 进入虚拟机</span><br><span class="line">vagrant ssh-config [name|id]  # 查看 ssh 配置</span><br><span class="line"></span><br><span class="line">vagrant snapshot list       # 查看快照列表</span><br><span class="line">vagrant snapshot push       # 状态入栈</span><br><span class="line">vagrant snapshot pop        # 状态弹栈</span><br><span class="line">vagrant snapshot save [vm-name] [NAME]     # 保存一个快照，不要与 push 和 pop 混合使用</span><br><span class="line">vagrant snapshot restore [vm-name] [NAME]  # 恢复指定快照</span><br><span class="line">vagrant snapshot delete [vm-name] [NAME]   # 删除一个快照</span><br></pre></td></tr></table></figure>
+
+<h3 id="Vagrantfile配置"><a href="#Vagrantfile配置" class="headerlink" title="Vagrantfile配置"></a>Vagrantfile配置</h3><ul>
+<li>单机配置</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Vagrant.configure(&quot;2&quot;) do |config|</span><br><span class="line">  config.vm.box = &quot;centos7&quot;             # box 名称</span><br><span class="line">  config.vm.hostname = &quot;centos7&quot;        # 虚拟机主机名 shell 中显示</span><br><span class="line">  config.vm.define &quot;centos7&quot;            # vagrant 状态查询中显示名字</span><br><span class="line">  config.vm.box_check_update = false    # 盒子不检查更新</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">配置成私有网络，类似主机模式</span></span><br><span class="line">  config.vm.network &quot;private_network&quot;, ip: &quot;192.168.33.10&quot;  </span><br><span class="line"><span class="meta prompt_">   # </span><span class="language-bash">虚拟机供应者参数配置，相当于在 virtualbox 中配置</span></span><br><span class="line">  config.vm.provider &quot;virtualbox&quot; do |vb|    </span><br><span class="line">    vb.gui = false      # 启动机器时显示 VirtualBox GUI    </span><br><span class="line">    vb.name = &quot;centos7&quot; # 虚拟机名称，virtualbox gui 中显示</span><br><span class="line">    vb.memory = 2048    # 虚拟机存储大小，mb    </span><br><span class="line">    vb.cpus = 2         # cpu 大小</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>集群配置</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Vagrant.configure(&quot;2&quot;) do |config|</span><br><span class="line">  config.vm.define :web do |web|</span><br><span class="line">    web.vm.provider &quot;virtualbox&quot; do |v|</span><br><span class="line">          v.customize [&quot;modifyvm&quot;, :id, &quot;--name&quot;, &quot;web&quot;, &quot;--memory&quot;, &quot;512&quot;]</span><br><span class="line">    end</span><br><span class="line">    web.vm.box = &quot;CentOs7&quot;</span><br><span class="line">    web.vm.hostname = &quot;web&quot;</span><br><span class="line">    web.vm.network :private_network, ip: &quot;192.168.33.10&quot;</span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  config.vm.define :redis do |redis|</span><br><span class="line">    redis.vm.provider &quot;virtualbox&quot; do |v|</span><br><span class="line">          v.customize [&quot;modifyvm&quot;, :id, &quot;--name&quot;, &quot;redis&quot;, &quot;--memory&quot;, &quot;512&quot;]</span><br><span class="line">    end</span><br><span class="line">    redis.vm.box = &quot;CentOs7&quot;</span><br><span class="line">    redis.vm.hostname = &quot;redis&quot;</span><br><span class="line">    redis.vm.network :private_network, ip: &quot;192.168.33.11&quot;</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>使用以下命令登录相关机器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant ssh redis / web</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置客户端工具-如XShell-连接"><a href="#配置客户端工具-如XShell-连接" class="headerlink" title="配置客户端工具[如XShell]连接"></a>配置客户端工具[如XShell]连接</h3><ol>
+<li><p>备注：Vagrant默认只能通过公私钥进行客户端连接,可通过如下命令查看私钥存放的位置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant ssh-config</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/2017166132/pictureBed/main/blogImg/20221119115110.jpg" alt="20221119115110"></p>
+</li>
+<li><p>修改默认root账号密码：输入以下命令，并根据提示输入新密码和确认密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sodo passwd root</span><br><span class="line">su root		# 切换root用户</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑配置文件sshd_config，并修改相关属性后重启sshd服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/ssh/sshd_config</span><br><span class="line"></span><br><span class="line">PermitRootLogin yes        # 允许直接通过root账号登录</span><br><span class="line">PasswordAuthentication yes # 可以通过密码登录</span><br><span class="line"></span><br><span class="line">systemctl restart sshd		#重启sshd服务</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改vagrantfile文件,并重启虚拟机，之后就可以通过Xshell连接服务器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">onfig.ssh.username = &#x27;root&#x27;</span><br><span class="line">config.ssh.password = &#x27;root&#x27;   #注意如果没有修改密码默认是vagrant</span><br><span class="line">config.ssh.insert_key = false  #是否通过公私钥来登录虚拟机，默认为true,如果为True,可能会出现一直Warning: Authentication failure. Retrying...</span><br><span class="line"></span><br><span class="line">vagrant reload		# 重启虚拟机</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h3><p><a target="_blank" rel="noopener" href="https://app.vagrantup.com/boxes/search">虚拟机镜像下载地址</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.vagrantup.com/docs/boxes">Vagrant官方文档</a></p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2022/10/06/%E9%9B%AA%E8%8A%B1ID%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7/" class="next-post btn btn-default" title='雪花ID生成工具'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            雪花ID生成工具</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Vagrant%E5%AE%89%E8%A3%85%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">Vagrant安装虚拟机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vagrant%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">Vagrant常用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vagrantfile%E9%85%8D%E7%BD%AE"><span class="toc-text">Vagrantfile配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%B7%A5%E5%85%B7-%E5%A6%82XShell-%E8%BF%9E%E6%8E%A5"><span class="toc-text">配置客户端工具[如XShell]连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5"><span class="toc-text">相关链接</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>

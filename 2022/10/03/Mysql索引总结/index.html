@@ -1,0 +1,377 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.3.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="http://example.com">
+    <!--SEO-->
+
+<meta name="keywords" content="Mysql,索引" />
+
+
+<meta name="description" content="索引定义
+
+索引(Index)是帮助MySQL高效获取数据的数据结构。我们可以简单理解为：快速查找排好序的一种数据结构。Mysql索引主要有两种结构：B+Tree索引和Hash索引。我们平常所说..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Mysql索引总结 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://example.com">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/Java/"><i class="fa "></i>
+                                Java</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/框架/"><i class="fa "></i>
+                                框架</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/工具/"><i class="fa "></i>
+                                工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/其他/"><i class="fa "></i>
+                                其他</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Mysql索引总结">
+            
+            Mysql索引总结
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/Mysql/" rel="tag">Mysql</a> <a class="tag-none-link" href="/tags/%E7%B4%A2%E5%BC%95/" rel="tag">索引</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2022/10/03</span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h3>索引定义</h3>
+
+<p><strong>索引(Index)是帮助MySQL高效获取数据的数据结构。我们可以简单理解为：快速查找排好序的一种数据结构。</strong>Mysql索引主要有两种结构：B+Tree索引和Hash索引。我们平常所说的索引，如果没有特别指明，一般都是指B树结构组织的索引(B+Tree索引)。</p>
+<h3>索引类型</h3>
+
+
+<p>Mysql中根据 索引中是否存在数据，将索引分为了两种类型的索引：<strong>聚簇索引</strong>和<strong>非聚簇索引</strong>。</p>
+<p><strong>聚簇索引</strong></p>
+<p>聚簇索引是在索引树的叶子节点中保存了完整的数据信息，则索引称为聚簇索引。Mysql的 InnoDB引擎为主键创建的主键索引即是聚簇索引，数据文件即是索引文件。MyIsam引擎中的主键索引也是非聚簇索引。</p>
+<p><strong>非聚簇索引</strong></p>
+<p>非聚簇索引是指索引树的叶子节点中保存的不是完整的数据信息，而是指向数据的一个指针或者是地址信息等（MyIsam的主键索引是指向数据的地址信息，InnoDB 中是主键的Id）。如果需要获取全部的数据信息，需要进行一次回表的操作。</p>
+<p><strong>联合索引</strong></p>
+<p>联合索引是同时对多个列创建的索引。索引树中的叶子节点会同时包含多个列的值，叶子节点之间的排序，会根据创建索引时候列的顺序排序，排序满足最左前缀规则。</p>
+<p>最左前缀规则：例如当存在一个联合索引，包括了A、B、C三列的时候，如果查询是使用了 A、【A、B】、【A、B、C】的查询方式，则可以使用这个索引，如果是 使用了 【B、C】作为查询条件，则不满足最左前缀原则，则不会使用这个索引。</p>
+<p>因为Mysql在创建联合索引的时候，是先去比较第一列的值，当第一列的值相同的时候，才会比较第二列的值，当第二列的值相同的时候，再去比较第三列的值，以此类推，直到最后的一列。所以，当跳过第一列的值，直接匹配第二列的时候，此时第二列的值不一定是有序的，所以无法使用。</p>
+<p><strong>覆盖索引</strong></p>
+<p>当使用某个查询条件的时候，如果需要查询的所有字段在索引中已经存在，即可直接返回，不用再根据查询到的主键ID进行回表操作，称为覆盖索引。</p>
+<p>如果我们为name和age 创建了一个索引。当我们查询name为指定值的数据的age 和Id的时候，就会使用覆盖索引。因为在索引数据已经存在了 name 和 age 的值（主键ID的值是每一个索引都会存在的），不会再根据id回表聚簇索引查询数据。</p>
+<p>如果在索引中不存在查询的字段数据信息，则会在查找到满足条件的数据之后，会根据查找到数据的主键ID，回表聚簇索引查找其他的信息，最终返回数据。</p>
+<p><strong>唯一索引</strong></p>
+<p>唯一索引要求指定的列的值不能存在相同的值，数据库在每一次进行添加或者修改的时候，都会进行数据的检查，如果数据存在了重复的值，则会直接返回失败。</p>
+<h3>索引原理</h3>
+
+
+<p>Mysql的数据，在索引树中存储的基本单位是页，即多个Mysql的数据项（暂且把用户数据和目录数据均称为数据项）组成了一个 页。当页的大小用完的时候，就会分裂出一个新的列，然后使用指针和之前的列连接起来，形成一个链表。</p>
+<p><img src="https://raw.githubusercontent.com/2017166132/pictureBed/main/blogImg/efcd105e410e0349e48af8db6ee2cd8e.png"></p>
+<p>因为这些节点在内存中的位置不一定是连续的，如果想要快速的从内存中找到对应的数据，就需要为这些数据创建一个目录，每一页对应一个目录项。然后再将目录项组装成一个 页，也就形成了如下的格式：</p>
+<p><img src="https://raw.githubusercontent.com/2017166132/pictureBed/main/blogImg/72c2cdb56fd6a207ca01407b98e39f06.png"></p>
+<p>目录项中记录的每一个数据页中的最小值以及页号，就可以通过比较值的大小，找到对应的页，就可以快速的定位到对应的数据。</p>
+<p>当目录页中的空间地址不足的时候，就分裂目录页，然后和数据页一样，使用指针将两个目录页串联起来，形成一个双向链表。</p>
+<p><img src="https://raw.githubusercontent.com/2017166132/pictureBed/main/blogImg/f8b0fbdcda1f46a25dfaef99f46e9812.png"></p>
+<p>以此类推，直到形成一个根目录（实际创建的时候，是先有的根目录，然后再慢慢的增加后续的目录页和数据页）。然后就形成了一棵B+树。查询的时候，就可以通过比较根目录中记录的Id 的大小，找到对应的Id 所在的下一级目录页，然后以此类推找到最终的叶子节点，就可以快速的找到对应的数据。</p>
+<p><img src="https://raw.githubusercontent.com/2017166132/pictureBed/main/blogImg/0e568a2a8734e5ef55c5861cf8f83416.png"></p>
+<p>所以从上述的过程中发现，创建的主键Id，最好是选用自增的ID，因为自增ID的顺序只需要在最后追加即可，如果是非规则的数据，可能下一次的id顺序比之前的都小，Mysql为了维护id的顺序，则会进行数据的移动，就会涉及到数据的迁移以及页的分裂等。</p>
+<h3>索引失效</h3>
+
+
+<p>索引失效是指为数据列创建了索引，但是在使用的时候，虽然使用了索引列，但是索引的作用不会生效，最终查询的时候，不会使用索引树进行查询。</p>
+<p><strong>索引失效的条件</strong></p>
+<ol>
+<li><p>索引列上的操作</p>
+<p>类型转换</p>
+</li>
+</ol>
+<p>​		计算</p>
+<ol start="2">
+<li>like查询以”%”开头</li>
+</ol>
+<p>因为Mysql在比较字符串的时候，是根据字符串从左到右做比较，满足最左匹配原则，当使用”%”开头查询的时候，就会破坏最左原则，所以不能使用索引。</p>
+<ol start="3">
+<li><p>破坏最左前缀原则：联合索引查询的时候，如果不满足最左前缀原则，则不会使用索引</p>
+</li>
+<li><p>范围查询的右边索引会失效</p>
+</li>
+</ol>
+<p>当有A、B、C三个联合索引的时候，如果where A &#x3D; 123 and B &gt; 20 and C &#x3D; 456;则C的索引会失效。因为 B 会返回多个值，会根据返回的多个值再去做匹配查询。因为在多个值的情况下，C的排序未必是有序的，可能是乱序的情况，无法使用索引。</p>
+<ol start="5">
+<li>or 查询</li>
+</ol>
+<p>or 查询会产生多条数据，这多个数据之间排序规则是不确定的。</p>
+<ol start="6">
+<li><p>使用 ≠ 做判断</p>
+</li>
+<li><p>字符串没有加单引号：会发生类型的隐式转换</p>
+</li>
+<li><p>估计全表扫描会比索引快</p>
+</li>
+</ol>
+<p><strong>排序产生filesort的原因</strong></p>
+<p>当对查询需要进行的排序的时候，如果排序的字段没有使用索引，或者不满足最左前缀原则，则会使用文件排序的方式，来完成排序。</p>
+<p><strong>为什么索引使用的数据结构是B+树，而不是二叉树或者是B树</strong></p>
+<ul>
+<li>使用二叉树查询的时候，查询的时间复杂度是O(log n)，查询的时间效率已经很快。但是二叉树存在一个问题是，每一个分支上，最多就只有两个分支，当数据量大的时候，就会导致树的高度很高，查询的时候，IO的次数就会增多，查询的效率就会有所下降。使用B树或者B+树，让一个节点，可以有多个分支，可以很好的降低树的高度，减少IO的次数，提升查询的效率。</li>
+</ul>
+<p><strong>为什么选择了B+ 树而不是B树</strong></p>
+<ul>
+<li>B树的特点是每一个节点中都会存储key和数据，而B+树只有叶子节点才会存储数据信息（这里的数据信息 指 索引的数据信息。针对聚簇索引），其他的节点都只会存储key的信息。Mysql在查询的时候，因为其他节点的数据量少，可以一次性的在内存中加载更多的key的数据，以供查询使用。</li>
+<li>B树的叶子节点之间是独立的，B+树的叶子节点之间有指针将叶子节点相连接起来。Mysql是一种关系型数据库，多个数据之间可能是存在一定的关系的，当查询某一个数据的时候，可能会查询和之相关的一些其他的数据，可以很好的支持范围查询。</li>
+<li>B树的查询效率不稳定，B+树查询的效率稳定。当查询数据的时候，B树在遇到满足条件的额数据之后，就会返回数据信息，不会走到叶子节点。但是B+树在查询的时候，无论如何都会走到叶子节点，才会获取到数据，并返回数据信息。</li>
+<li>因为B+树的叶子节点不会存放数据信息（这里的数据信息指 完整的数据信息，包括了未添加索引的列的信息。即 索引中的叶子节点，只会存放 索引列的数据，不包括未被索引的数据。聚簇索引包括所有数据，其他索引只包括 索引列和主键列），所以有更多的空间来存放key的信息，可以让树的高度更低，IO的次数更少，效率更高。</li>
+</ul>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2022/10/04/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="pre-post btn btn-default" title='设计模式-单例模式'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            设计模式-单例模式</span>
+    </a>
+    
+    
+    <a href="/2022/10/02/zabbix-%E7%9B%91%E6%8E%A7-zookeeper/" class="next-post btn btn-default" title='zabbix 监控 zookeeper'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            zabbix 监控 zookeeper</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='shenliyang/snippet-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">索引定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">索引类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">索引原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">索引失效</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>

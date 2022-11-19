@@ -1,0 +1,344 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.3.0">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="http://example.com">
+    <!--SEO-->
+
+<meta name="keywords" content="Linux" />
+
+
+<meta name="description" content="防火墙相关1. firewalld的基本使用 
+1234systemctl start firewalld 		#启动systemctl status firewalld  	#查看状态syst..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    Linux 常用命令 |
+    
+    Hexo
+</title>
+
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    https://hexo-theme-snippet-1251680922.cos.ap-beijing.myqcloud.com/img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+            <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://example.com">
+                        Hexo</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/Java/"><i class="fa "></i>
+                                Java</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/框架/"><i class="fa "></i>
+                                框架</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/工具/"><i class="fa "></i>
+                                工具</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/categories/其他/"><i class="fa "></i>
+                                其他</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives/"><i class="fa "></i>
+                                时间轴</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Linux 常用命令">
+            
+            Linux 常用命令
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a class="category-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-none-link" href="/tags/Linux/" rel="tag">Linux</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2022/10/02</span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="防火墙相关"><a href="#防火墙相关" class="headerlink" title="防火墙相关"></a>防火墙相关</h3><p><strong>1. firewalld的基本使用</strong> </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl start firewalld 		#启动</span><br><span class="line">systemctl status firewalld  	#查看状态</span><br><span class="line">systemctl stop firewalld 		#停止</span><br><span class="line">systemctl disable firewalld		#禁用</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 配置firewalld-cmd</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --version			#查看版本</span><br><span class="line">firewall-cmd --help				#查看帮助</span><br><span class="line">firewall-cmd --state			#显示状态</span><br><span class="line">firewall-cmd --zone=public --list-ports			#查看所有打开的端口</span><br><span class="line">firewall-cmd --reload							#更新防火墙规则</span><br><span class="line">firewall-cmd --get-active-zones					#查看区域信息</span><br><span class="line">firewall-cmd --get-zone-of-interface=eth		#查看指定接口所属区域 </span><br><span class="line">firewall-cmd --panic-on			#拒绝所有包</span><br><span class="line">firewall-cmd --panic-off		#取消拒绝状态</span><br><span class="line">firewall-cmd --query-panic 		#查看是否拒绝</span><br><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent    （--permanent永久生效，没有此参数重启后失效）	#开放端口</span><br><span class="line">firewall-cmd --reload			#重新载入</span><br><span class="line">firewall-cmd --zone= public --query-port=80/tcp	#查看</span><br><span class="line">firewall-cmd --zone= public --remove-port=80/tcp --permanent	#移除</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.端口</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看端口占用情况</span></span><br><span class="line">lsof -i:端口号</span><br><span class="line">或</span><br><span class="line">netstat -tnlp | grep 端口号</span><br><span class="line">-a：显示本机所有连接和监听地端口</span><br><span class="line">-n：网络IP地址的形式，显示当前建立的有效连接和端口</span><br><span class="line">-r：显示路由表信息</span><br><span class="line">-s：显示按协议的统计信息</span><br><span class="line">-v：显示当前有效的连接</span><br><span class="line">-t：显示所有TCP协议连接情况</span><br><span class="line">-u：显示所有UDP协议连接情况</span><br><span class="line">-i：显示自动配置端口的状</span><br><span class="line">-l：仅仅显示连接状态为listening的服务网络状态</span><br><span class="line">-p：显示pid/program name</span><br></pre></td></tr></table></figure>
+
+<h3 id="压缩解压"><a href="#压缩解压" class="headerlink" title="压缩解压"></a>压缩解压</h3><p>在 Linux 中常见压缩格式有十几种，比如：”.zip”、”.gz”、”.bz2”、“tar”、”.tar.gz”、”.tar.bz2”等等</p>
+<p><strong>.zip</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">压缩</span></span><br><span class="line">zip [选项] 压缩包名 源文件或源目录</span><br><span class="line">选项：</span><br><span class="line">​ -r：压缩目录</span><br><span class="line">zip mytxt.zip a.txt a.txt c.txt 	#将a,b,c压缩在mytext.zip中</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">解压</span></span><br><span class="line">unzip [选项] 压缩包名</span><br><span class="line">选项：</span><br><span class="line">​ -d：指定解压缩位置	如果不指定 -d 参数，默认解压到当前目录下</span><br><span class="line">unzip -d /usr/local/doc/ mytxt.zip 	#将mytext解压到/usr/local/doc/目录</span><br></pre></td></tr></table></figure>
+
+<p><strong>.tar</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">压缩</span></span><br><span class="line">tar [选项] [-f 压缩包名] 源文件或目录</span><br><span class="line">选项：</span><br><span class="line">​ -c：打包</span><br><span class="line">​ -f：指定压缩包的文件名。压缩包的扩展名是用来给管理员识别格式的，所以一定要正确指定扩展名。</span><br><span class="line">​ -v：显示打包文件过程</span><br><span class="line">tar -cvf mytxt.tar a.txt b.txt c.text</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">解压</span></span><br><span class="line">tar [选项] 压缩包</span><br><span class="line">选项：</span><br><span class="line">​ -x：解打包</span><br><span class="line">​ -f：指定压缩包的文件名</span><br><span class="line">​ -v：显示解打包文件过程</span><br><span class="line">tar -xvf mytxt.tar </span><br></pre></td></tr></table></figure>
+
+<p><strong>.gz [只能压缩，不能打包]</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">压缩</span></span><br><span class="line">gzip [选项] 源文件</span><br><span class="line">选项：</span><br><span class="line">​ -c：将压缩数据输出到标准输出中，可以用于保留源文件</span><br><span class="line">​ -d：解压缩</span><br><span class="line">​ -r：压缩目录</span><br><span class="line">gzip 压缩文件后会把源文件删除掉，它是不支持保留源文件的	使用 gzip -r 目录 命令，它是把这个目录下的所有文件都压缩，而不会把这个目录压缩(不能打包)</span><br><span class="line">gzip abc.txt 	#压缩abc.txt文件，之后删除源文件</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">解压</span></span><br><span class="line">gzip -d 压缩包名</span><br><span class="line">或</span><br><span class="line">gunzip 压缩包名</span><br></pre></td></tr></table></figure>
+
+<p><strong>.tar.gz 和 .tar.bz2”格式</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">压缩</span></span><br><span class="line">tar [选项] 压缩包 源文件或目录</span><br><span class="line">选项：</span><br><span class="line">​ -z：压缩和解压缩 &quot;.tar.gz&quot; 格式</span><br><span class="line">​ -j： 压缩和解压缩 &quot;.tar.bz2&quot; 格式</span><br><span class="line">tar -jcvf test.gz.bz2 a.txt b.txt c.txt</span><br><span class="line">tar -zcvf test.tar.gz aa.txt b.txt </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">解压</span></span><br><span class="line">tar -jxvf test.gz.bz2 </span><br><span class="line">tar -zxvf test.tar.gz </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">只查看不解压</span></span><br><span class="line">tar -ztvf test.tar.gz </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解压到指定目录(-C 一定要跟在压缩包后面)</span></span><br><span class="line">tar -zxvf test.tar.gz -C /usr/local/doc/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解压指定文件</span></span><br><span class="line">tar -ztvf test.tar.gz </span><br><span class="line">tar -zxvf test.tar.gz -C /usr/local/doc a.text	#将压缩包中a.text解压到/usr/local/doc目录</span><br></pre></td></tr></table></figure>
+
+<h3 id="chkconfig"><a href="#chkconfig" class="headerlink" title="chkconfig"></a>chkconfig</h3><p><strong>linux 运行级别</strong></p>
+<p>运行级别就是操作系统当前正在运行的功能级别。这个级别从0到6 ，具有不同的功能。这些级别在&#x2F;etc&#x2F;inittab文件里指定。这个文件是init程序寻找的主要文件，最先运行的服务是那些放在&#x2F;etc&#x2F;rc.d 目录下的文件。</p>
+<p>不同的运行级定义如下：(可以参考Linux里面的&#x2F;etc&#x2F;inittab)</p>
+<p># 缺省的运行级，RHS用到的级别如下：</p>
+<p>​	0：关机</p>
+<p>​	1：单用户模式</p>
+<p>​	2：无网络支持的多用户模式</p>
+<p>​	3：有网络支持的多用户模式</p>
+<p>​	4：保留，未使用</p>
+<p>​	5：有网络支持有X-Window支持的多用户模式</p>
+<p>​	6：重新引导系统，即重启</p>
+<p>对各个运行级的详细解释：</p>
+<p>​	0 为停机，机器关闭。</p>
+<p>​	1 为单用户模式，就像Win9x下的安全模式类似。</p>
+<p>​	2 为多用户模式，但是没有NFS支持。 </p>
+<p>​	3 为完整的多用户模式，是标准的运行级。</p>
+<p>​	4 一般不用，在一些特殊情况下可以用它来做一些事情。例如在笔记本 电脑的电池用尽时，可以切换到这个模式来做一些设置。</p>
+<p>​	5 就是X11，进到X Window系统了。</p>
+<p>​	6 为重启，运行init 6机器就会重启。</p>
+<p><strong>chkconfig命令可以用来检查、设置系统的各种服务</strong></p>
+<p>使用语法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">chkconfig [--add][--del][--list][系统服务] 或 chkconfig [--level &lt;等级代号&gt;][系统服务][on/off/reset]</span><br><span class="line"></span><br><span class="line">参数用法：</span><br><span class="line"></span><br><span class="line">–add 　增加所指定的系统服务，让chkconfig指令得以管理它，并同时在系统启动的叙述文件内增加相关数据。</span><br><span class="line"></span><br><span class="line">–del 　删除所指定的系统服务，不再由chkconfig指令管理，并同时在系统启动的叙述文件内删除相关数据。</span><br><span class="line"></span><br><span class="line">–level&lt;等级代号&gt; 　指定读系统服务要在哪一个执行等级中开启或关毕。</span><br></pre></td></tr></table></figure>
+
+<p>使用范例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">chkconfig –-list          #列出所有的系统服务</span><br><span class="line"></span><br><span class="line">chkconfig –-add redis        #增加redis服务</span><br><span class="line"></span><br><span class="line">chkconfig –-del redis        #删除redis 服务</span><br><span class="line"></span><br><span class="line">chkconfig –-level redis 2345 on   #把redis在运行级别为2、3、4、5的情况下都是on（开启）的状态。</span><br></pre></td></tr></table></figure>
+
+<h3 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h3><p>wc命令 统计指定文件中的<strong>字节数、字数、行数</strong>，并将统计结果显示输出。利用wc指令我们可以计算文件的Byte数、字数或是列数。若<strong>不指定文件名称，或是所给予的文件名为“-”</strong>，则wc指令会从标准输入设备读取数据。wc同时也给出所指定文件的总统计数。</p>
+<p>语法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wc(选项)(参数)</span><br><span class="line">wc [选项]... [文件]...</span><br><span class="line">wc [选项]... --files0-from=F</span><br></pre></td></tr></table></figure>
+
+<p>选项：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-c # 统计字节数，或--bytes或——chars：只显示Bytes数；。</span><br><span class="line">-l # 统计行数，或——lines：只显示列数；。</span><br><span class="line">-m # 统计字符数。这个标志不能与 -c 标志一起使用。</span><br><span class="line">-w # 统计字数，或——words：只显示字数。一个字被定义为由空白、跳格或换行字符分隔的字符串。</span><br><span class="line">-L # 打印最长行的长度。</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2022/10/02/zabbix-%E7%9B%91%E6%8E%A7-zookeeper/" class="pre-post btn btn-default" title='zabbix 监控 zookeeper'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            zabbix 监控 zookeeper</span>
+    </a>
+    
+    
+</div>
+
+<div id="comments">
+    
+    
+<div class="utteranc">
+  
+  <script
+    src='https://utteranc.es/client.js'
+    repo='shenliyang/snippet-comment'
+    issue-term='pathname'
+    issue-number=''
+    theme='github-light'
+    label=''
+    crossorigin='anonymous'
+    async
+  ></script>
+</div>
+
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E7%9B%B8%E5%85%B3"><span class="toc-text">防火墙相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%8B%E7%BC%A9%E8%A7%A3%E5%8E%8B"><span class="toc-text">压缩解压</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chkconfig"><span class="toc-text">chkconfig</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wc"><span class="toc-text">wc</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy;
+                    2017
+                    
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
